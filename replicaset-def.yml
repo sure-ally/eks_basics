@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myapp-replicaset
+  labels:
+    name: myapp-rs
+
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: myapp2
+  template:
+    metadata:
+      name: myapp2-pod
+      labels:
+        app: myapp2
+        tier: frontend
+        
+    spec:
+      containers:
+        - name: myapp2
+          image: stacksimplify/kubenginx:2.0.0
+          ports:
+            - containerPort: 80
+
