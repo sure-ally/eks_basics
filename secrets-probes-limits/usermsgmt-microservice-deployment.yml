@@ -4,6 +4,7 @@ metadata:
     name: usermgmt-microservice
     labels: 
         app: usermgmt-restapp
+    namespace: dev3
 
 spec:
     replicas: 1
@@ -40,3 +41,25 @@ spec:
                         key: db-password
                   - name: DB_USERNAME
                     value: "root"
+                livenessProbe:
+                  exec:
+                    command:
+                      - /bin/sh
+                      - -c
+                      - nc -z localhost 8095
+                  initialDelaySeconds: 69
+                  periodSeconds: 10
+                readinessProbe:
+                  httpGet:
+                    path: /usermgmt/health-status
+                    port: 8095
+                  initialDelaySeconds: 69
+                  periodSeconds: 10
+                # resources:
+                #   requests:
+                #     cpu: "500m"
+                #     memory: "128Mi"
+                #   limits:
+                #     cpu: "1000m"
+                #     memory: "500Mi"
+
