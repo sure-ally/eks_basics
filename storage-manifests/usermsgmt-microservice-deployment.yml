@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: usermgmt-microservice
+    labels: 
+        app: usermgmt-restapp
+
+spec:
+    replicas: 1
+    selector:
+        matchLabels:
+            app: usermgmt-restapp
+    template:
+        metadata:
+            labels: 
+                app: usermgmt-restapp
+        spec:
+            containers:
+                - name: usermgmt-resapp
+                  image: stacksimplify/kube-usermanagement-microservice:1.0.0
+                  ports:
+                    - name: contport
+                      containerPort: 8095
+                  env:
+                    - name: DB_HOSTNAME
+                      value: "mysql"
+                    - name: DB_PORT
+                      value: "3306"
+                    - name: DB_NAME
+                      value: "usermgmt"
+                    - name: DB_PASSWORD
+                      valueFrom:
+                        secretKeyRef:
+                          name: mysql-db-password
+                          key: db-password
+                    - name: DB_USERNAME
+                      value: "root"

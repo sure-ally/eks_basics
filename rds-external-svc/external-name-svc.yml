@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+
+spec: 
+  type: ExternalName
+  externalName: usermgmtdb.c6mbms5trjpl.us-east-1.rds.amazonaws.com
+
+# kubectl run -it --rm --image=mysql:8.0.33 --restart=Never mysql-client -- mysql -h usermgmtdb.c6mbms5trjpl.us-east-1.rds.amazonaws.com -u dbadmin -pdbpassword11
